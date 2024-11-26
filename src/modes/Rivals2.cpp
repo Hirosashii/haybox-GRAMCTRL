@@ -19,7 +19,7 @@ Rivals2::Rivals2(socd::SocdType socd_type) {
 }
 
 void Rivals2::UpdateDigitalOutputs(InputState &inputs, OutputState &outputs) {
-    outputs.a = inputs.a;
+    outputs.a = inputs.r;
     outputs.b = inputs.b;
     outputs.x = inputs.x;
     outputs.y = inputs.y;
@@ -31,14 +31,17 @@ void Rivals2::UpdateDigitalOutputs(InputState &inputs, OutputState &outputs) {
         }
         outputs.triggerLDigital = inputs.nunchuk_z;
     } else {
-        outputs.triggerLDigital = inputs.l;
+        outputs.triggerLDigital = inputs.c_down;
     }
-    outputs.triggerRDigital = inputs.r;
+    outputs.triggerRDigital = inputs.midshield;
     outputs.start = inputs.start;
     outputs.select = inputs.select;
     outputs.home = inputs.home;
-    outputs.leftStickClick = inputs.lightshield;
-    outputs.buttonL = inputs.midshield;
+    if (inputs.a) {
+        outputs.rightStickY = 128;
+    }
+    //outputs.leftStickClick = inputs.lightshield;
+    //outputs.buttonL = inputs.midshield;
 
     // Activate D-Pad layer by holding Mod X + Mod Y.
     if (inputs.mod_x && inputs.mod_y) {
@@ -109,7 +112,7 @@ void Rivals2::UpdateAnalogOutputs(InputState &inputs, OutputState &outputs) {
                     outputs.leftStickX = 128 + (directions.x * 123);
                     outputs.leftStickY = 128 + (directions.y * 42);
                     // (x, y), (120, 53), (1.1~, 0.31~) [coords, code_values, in-game values]
-                    if (inputs.c_down) {
+                    if (inputs.a) {
                         outputs.leftStickX = 128 + (directions.x * 120);
                         outputs.leftStickY = 128 + (directions.y * 53);
                     }
@@ -135,7 +138,7 @@ void Rivals2::UpdateAnalogOutputs(InputState &inputs, OutputState &outputs) {
                     outputs.leftStickX = 128 + (directions.x * 68);
                     outputs.leftStickY = 128 + (directions.y * 42);
                     // (x, y), (71, 47), (~0.52, ~0.24) [coords, code_values, in-game values]
-                    if (inputs.c_down) {
+                    if (inputs.a) {
                         outputs.leftStickX = 128 + (directions.x * 71);
                         outputs.leftStickY = 128 + (directions.y * 47);
                     }
@@ -162,7 +165,7 @@ void Rivals2::UpdateAnalogOutputs(InputState &inputs, OutputState &outputs) {
                     outputs.leftStickY = 128 + (directions.y * 42);
                 }
                 // MX Angled Tilts 
-                if (inputs.a) {
+                if (inputs.c_down) {
                     input_persist = true;
                 }
             }
@@ -185,7 +188,7 @@ void Rivals2::UpdateAnalogOutputs(InputState &inputs, OutputState &outputs) {
                 outputs.leftStickX = 128 + (directions.x * 42);
                 outputs.leftStickY = 128 + (directions.y * 123);
                 // (x, y), (53, 120), (~0.31, ~1.1) [coords, code_values, in-game values]
-                if (inputs.c_down) {
+                if (inputs.a) {
                     outputs.leftStickX = 128 + (directions.x * 53);
                     outputs.leftStickY = 128 + (directions.y * 120);
                 }
@@ -211,7 +214,7 @@ void Rivals2::UpdateAnalogOutputs(InputState &inputs, OutputState &outputs) {
                 outputs.leftStickX = 128 + (directions.x * 42);
                 outputs.leftStickY = 128 + (directions.y * 68);
                 // (x, y), (47, 71), (~0.24, ~0.52) [coords, code_values, in-game values]
-                if (inputs.c_down) {
+                if (inputs.a) {
                     outputs.leftStickX = 128 + (directions.x * 47);
                     outputs.leftStickY = 128 + (directions.y * 71);
                 }
